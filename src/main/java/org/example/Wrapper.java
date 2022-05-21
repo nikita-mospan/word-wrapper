@@ -19,20 +19,19 @@ public class Wrapper {
         final char NEWLINE = '\n';
 
         StringBuilder accumulator = new StringBuilder();
-        accumulator.append(inputString);
-        int processedPosition = 0;
-        int insertedNewlines = 0;
-        while (processedPosition + maxLineLength < inputString.length()) {
-            int indexOfSpace = inputString.lastIndexOf(SPACE, processedPosition + maxLineLength);
-            if (indexOfSpace > processedPosition - 1) {
-                accumulator.setCharAt(insertedNewlines + indexOfSpace, NEWLINE);
-                processedPosition = indexOfSpace + 1;
+        int processedIndex = 0;
+        while (processedIndex + maxLineLength < inputString.length()) {
+            int indexOfSpace = inputString.lastIndexOf(SPACE, processedIndex + maxLineLength);
+            if (indexOfSpace >= processedIndex) {
+                accumulator.append(inputString, processedIndex, indexOfSpace);
+                processedIndex = indexOfSpace + 1;
             } else {
-                accumulator.insert(insertedNewlines + processedPosition + maxLineLength, NEWLINE);
-                processedPosition += maxLineLength;
-                insertedNewlines++;
+                accumulator.append(inputString, processedIndex, processedIndex + maxLineLength);
+                processedIndex += maxLineLength;
             }
+            accumulator.append(NEWLINE);
         }
+        accumulator.append(inputString, processedIndex, inputString.length());
         return accumulator.toString();
     }
 }

@@ -43,6 +43,13 @@ public class WrapperTest {
     }
 
     @Test
+    public void severalSpaces() {
+        final String inputString  = "Hello    World";
+        final String expected = "Hello\n  \nWorld";
+        Assert.assertEquals(expected, Wrapper.wrap(inputString, 5));
+    }
+
+    @Test
     public void longLine() {
         final int inputStringLength = 1_000_000;
         final String inputString = new String(new char[inputStringLength]).replace('\0', 'a');
